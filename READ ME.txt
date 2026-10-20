@@ -1,0 +1,18 @@
+# Sistema Experto de Diagnóstico de Impresión 3D
+
+Este proyecto implementa un sistema experto desarrollado en SWI-Prolog, integrado con una interfaz web mediante Node.js y empaquetado con Docker.
+
+## Arquitectura
+- **Frontend:** HTML, CSS y JavaScript (Vanilla).
+- **Backend/API:** Node.js con Express (comunicación HTTP y JSON).
+- **Motor de Inferencia:** SWI-Prolog.
+
+## Ejecución Local
+1. Instalar Node.js y SWI-Prolog en el sistema.
+2. Clonar el repositorio.
+3. Ejecutar `npm install` para descargar las dependencias.
+4. Ejecutar `npm start` para iniciar el servidor.
+5. Acceder a `http://localhost:3000` en el navegador.
+
+## Despliegue
+Este proyecto está configurado para ser desplegado mediante Docker. El `Dockerfile` incluido instala SWI-Prolog nativo sobre una imagen de Node.js.

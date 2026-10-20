@@ -1,0 +1,12 @@
+{
+  "name": "sistema-experto-3d",
+  "version": "1.0.0",
+  "description": "Sistema experto en Prolog con interfaz web",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
