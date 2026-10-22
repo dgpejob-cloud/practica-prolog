@@ -12,7 +12,7 @@
         header p { color: #64748b; margin-top: 5px; }
         .form-group { margin-bottom: 25px; }
         .form-select { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px; background-color: #f8fafc; }
-        .sintomas-container { margin-top: 10px; padding: 15px; border: 1px solid #cbd5e1; border-radius: 6px; max-height: 250px; overflow-y: auto; background-color: #f8fafc; }
+        .sintomas-container { margin-top: 10px; padding: 15px; border: 1px solid #cbd5e1; border-radius: 6px; max-height: 280px; overflow-y: auto; background-color: #f8fafc; }
         .sintomas-container label { display: block; margin-bottom: 12px; cursor: pointer; font-size: 15px; }
         .sintomas-container input[type="checkbox"] { margin-right: 10px; transform: scale(1.2); }
         .btn-consultar { width: 100%; padding: 14px; background-color: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: background-color 0.2s; }
@@ -50,6 +50,12 @@
                 <label><input type="checkbox" name="sintoma" value="capa_desplazada"> Impresión inclinada (Capa desplazada)</label>
                 <label><input type="checkbox" name="sintoma" value="subextrusion"> Capas con agujeros (Subextrusión)</label>
                 <label><input type="checkbox" name="sintoma" value="pie_elefante"> Base más ancha de lo normal (Pie de elefante)</label>
+                <label><input type="checkbox" name="sintoma" value="ghosting"> Ecos o vibraciones en las paredes (Ghosting)</label>
+                <label><input type="checkbox" name="sintoma" value="blobs"> Burbujas o granos en la superficie (Blobs / Zits)</label>
+                <label><input type="checkbox" name="sintoma" value="sobreextrusion"> Exceso de material y paredes rugosas (Sobreextrusión)</label>
+                <label><input type="checkbox" name="sintoma" value="z_banding"> Líneas horizontales repetitivas (Z-Banding)</label>
+                <label><input type="checkbox" name="sintoma" value="curling"> Esquinas deformadas hacia arriba (Curling)</label>
+                <label><input type="checkbox" name="sintoma" value="espagueti"> Impresión fallida con nido de hilos (Espagueti)</label>
             </div>
         </div>
 
@@ -66,25 +72,19 @@
             const boton = document.getElementById('btn-submit');
             const resultadoDiv = document.getElementById('resultado');
             
-            // 1. Extraer el material
             const materialSeleccionado = document.getElementById('material').value;
-            
-            // 2. Extraer los checkboxes marcados
             const checks = document.querySelectorAll('input[name="sintoma"]:checked');
             const sintomasSeleccionados = Array.from(checks).map(cb => cb.value);
 
-            // Validar que al menos haya seleccionado un síntoma
             if (sintomasSeleccionados.length === 0) {
                 resultadoDiv.innerHTML = "<p style='color:#dc2626; font-weight:bold;'>Por favor, selecciona al menos un síntoma de la lista.</p>";
                 return;
             }
 
-            // Cambiar el estado del botón mientras carga
             boton.innerText = "Consultando...";
             boton.disabled = true;
             resultadoDiv.innerHTML = "Analizando reglas de inferencia en Prolog...";
 
-            // 3. Enviar al servidor Node.js
             try {
                 const response = await fetch('/api/consultar', {
                     method: 'POST',
@@ -96,13 +96,10 @@
                 });
 
                 const data = await response.json();
-                
-                // 4. Mostrar el resultado
                 resultadoDiv.innerHTML = data.recomendacion;
             } catch (error) {
                 resultadoDiv.innerHTML = "<p style='color:#dc2626;'>Hubo un error de conexión con el servidor.</p>";
             } finally {
-                // Restaurar el botón
                 boton.innerText = "Consultar Motor Prolog";
                 boton.disabled = false;
             }
